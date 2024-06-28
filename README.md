@@ -74,10 +74,11 @@ After a successful build, simply transfer the `atmosphere` folder located inside
 
 # Contributors
 
+-[CraftyBoss](https://github.com/craftyboss) Online Multiplayer
 - [Sanae](https://github.com/sanae6) Wrote the majority of the server code
 - [Shadow](https://github.com/shadowninja108) original author of starlight, the tool used to make this entire modpossible.
 - [Hesmakka](https://github.com/LynxDev2) Wrote the Code for Cappy Dealing Damage and Compass to Track other Players
-- [Crazalu]() Making Faster Moon Cutscenes
+- [Crazalu](https://www.twitch.tv/crazalu) Making Faster Moon Cutscenes
 - [Secret Dev(me)](https://github.com/dadev123) Making the mod Look Good (RomFS)
 - [Gorganim](https://www.youtube.com/channel/UCyARR33zAmB9s0vjvJZnl3g), me, and some Friends for Most Test
 # Credits
