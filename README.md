@@ -79,7 +79,7 @@ After a successful build, simply transfer the `atmosphere` folder located inside
 - [Hesmakka]() Wrote the Code for Cappy Dealing Damage and Compass
 - [Crazalu]() Making Faster Moon Cutscenes
 - [Secret Dev(me)](https://github.com/dadev123) Making the mod Look Good (RomFS)
-- Gorganim, me, and some Friends for Most Test
+- [Gorganim](https://www.youtube.com/channel/UCyARR33zAmB9s0vjvJZnl3g), me, and some Friends for Most Test
 # Credits
 - [OdysseyDecomp](https://github.com/shibbo/OdysseyDecomp)
 - [OdysseyReversed](https://github.com/shibbo/OdysseyReversed)
