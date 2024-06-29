@@ -40,9 +40,9 @@ Before installing, Ensure that your switch is hacked. If not, follow [This Guide
 
 ## Gamemode Controls
 ### ManHunt
-- Hit Start
-- Hit Options
-- Hit ManHunt Settings
+- Press **Start**
+- Press **Options**
+- Press **ManHunt Settings**
 - Choose you're Role
 
 ## Building Prerequisites
