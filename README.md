@@ -80,7 +80,7 @@ After a successful build, simply transfer the `atmosphere` folder located inside
 - [Hesmakka](https://github.com/LynxDev2) Wrote the Code for Cappy Dealing Damage and Compass to Track other Players (ExeFS)
 - [Crazalu](https://www.twitch.tv/crazalu) Making Faster Moon Cutscenes
 - [Secret Dev(me)](https://github.com/dadev123) Making the mod Look Good (RomFS)
-- [1tsAJ](
+- [1tsAJ](https://gamebanana.com/members/2231282)
 - [Gorganim](https://www.youtube.com/channel/UCyARR33zAmB9s0vjvJZnl3g), me, and some Friends for Most Test
 # Credits
 - [OdysseyDecomp](https://github.com/shibbo/OdysseyDecomp)
