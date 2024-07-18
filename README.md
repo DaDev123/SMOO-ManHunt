@@ -31,43 +31,9 @@ Before installing, Ensure that your switch is hacked. If not, follow [This Guide
 ### Server Configuration
 * Since ManHunt is mostly for 2 Player these are the Recommanded Settings to the Server
 
-
- -  {
-  "Server": {
-    "Address": "0.0.0.0",
-    "Port": 1027,
-    "MaxPlayers": 3
-  },
-  "Flip": {
-    "Enabled": false,
-    "Players": [],
-    "Pov": "both"
-  },
-  "Scenario": {
-    "MergeEnabled": false
-  },
-  "BanList": {
-    "Enabled": false,
-    "Players": [],
-    "IpAddresses": [],
-    "Stages": []
-  },
-  "Discord": {
-    "Token": null,
-    "Prefix": "$",
-    "CommandChannel": null,
-    "LogChannel": null
-  },
-  "Shines": {
-    "Enabled": false
-  },
-  "PersistShines": {
-    "Enabled": false,
-    "Filename": "./moons.json"
-  }
-}
-
-
+"MaxPlayers": **3**
+"Shines": **false**
+"Flip": **false**
 
 ## Gamemode Info
 ### ManHunt
