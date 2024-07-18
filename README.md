@@ -7,6 +7,8 @@ This Repository Features the ManHunt Gamemode !
 * Moon Cutscenes are Faster
 * Globe Cutscenes are Faster
 * Cap Kingdom as been Made Faster
+* Text While Changing Kingdoms Made Faster
+* Compass Pointing to The Other Player
 * Cappy Deals Damage
 * Almost every captures in the game is synced between players
 * Full 2D and Costume models syncing
