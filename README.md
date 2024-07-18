@@ -29,7 +29,7 @@ Before installing, Ensure that your switch is hacked. If not, follow [This Guide
 4. Launch the game! Upon first time bootup, the mod should ask for a server IP to save to the games common save file. This IP address will be the server you wish to connect to every time you launch the game with the mod installed. (Note: un-installing the mod and launching the game will remove the server IP from the common save file.)
 
 ### Server Configuration
-* Since ManHunt is mostly for 2 Player these are the Recommanded Settings to the Server
+* Since ManHunt is mostly for 2 Player and Wooded Kingdom could crash, these are the Recommanded Settings to the Server
 
 "MaxPlayers": **3**
 
