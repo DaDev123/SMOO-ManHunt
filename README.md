@@ -1,4 +1,4 @@
-# Super Mario Odyssey - Online Multiplayer Mod
+# Super Mario Odyssey Online Multiplayer - ManHunt Gamemode
 
 Welcome to the modified repository for the Super Mario Odyssey Online mod!
 This Repository Features the ManHunt Gamemode !
