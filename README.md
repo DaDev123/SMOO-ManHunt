@@ -32,7 +32,7 @@ Before installing, Ensure that your switch is hacked. If not, follow [This Guide
 * Since ManHunt is mostly for 2 Player these are the Recommanded Settings to the Server
 
 
-  {
+ -  {
   "Server": {
     "Address": "0.0.0.0",
     "Port": 1027,
