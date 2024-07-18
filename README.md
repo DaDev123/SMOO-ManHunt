@@ -28,6 +28,10 @@ Before installing, Ensure that your switch is hacked. If not, follow [This Guide
 3. If you need to host an online server, head over to the [Super Mario Odyssey Online Server](https://github.com/Sanae6/SmoOnlineServer) repository and follow the instructions there to set up the server.
 4. Launch the game! Upon first time bootup, the mod should ask for a server IP to save to the games common save file. This IP address will be the server you wish to connect to every time you launch the game with the mod installed. (Note: un-installing the mod and launching the game will remove the server IP from the common save file.)
 
+### Server Configuration
+* Since ManHunt is mostly for 2 Player these are the Recommanded Settings to the Server
+* 
+
 ## Gamemode Info
 ### ManHunt
 * Depending on Group size, select who will start as a Runner at the beginning of each round.
