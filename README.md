@@ -72,16 +72,20 @@ After a successful build, simply transfer the `atmosphere` folder located inside
 
 ---
 
+# Main Mod Creator
+
+- [Hesmakka](https://github.com/LynxDev2) Wrote the Code for Cappy Dealing Damage and Compass to Track other Players (ExeFS)
+- [Secret Dev(me)](https://github.com/dadev123) Making the mod Look Good (RomFS)
+
+
 # Contributors
 
--[CraftyBoss](https://github.com/craftyboss) Online Multiplayer
+- [CraftyBoss](https://github.com/craftyboss) Online Multiplayer
 - [Sanae](https://github.com/sanae6) Wrote the majority of the server code
 - [Shadow](https://github.com/shadowninja108) original author of starlight, the tool used to make this entire modpossible.
-- [Hesmakka](https://github.com/LynxDev2) Wrote the Code for Cappy Dealing Damage and Compass to Track other Players (ExeFS)
 - [Crazalu](https://www.twitch.tv/crazalu) Making Faster Moon Cutscenes
-- [Secret Dev(me)](https://github.com/dadev123) Making the mod Look Good (RomFS)
-- [1tsAJ](https://gamebanana.com/members/2231282)
-- [Gorganim](https://www.youtube.com/channel/UCyARR33zAmB9s0vjvJZnl3g), me, and some Friends for Most Test
+- [1tsAJ](https://gamebanana.com/members/2231282) Making Faster Text
+- [Gorganim](https://www.youtube.com/channel/UCyARR33zAmB9s0vjvJZnl3g), Testing the Mod, Reported Bugs
 # Credits
 - [OdysseyDecomp](https://github.com/shibbo/OdysseyDecomp)
 - [OdysseyReversed](https://github.com/shibbo/OdysseyReversed)
