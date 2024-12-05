@@ -4,10 +4,10 @@
 
 HideAndSeekConfigMenu::HideAndSeekConfigMenu() : GameModeConfigMenu() {
     mItems = new sead::SafeArray<sead::WFixedSafeString<0x200>, mItemCount>();
-    mItems->mBuffer[1].copy(u"Mario Collision (ON)    ");
-    mItems->mBuffer[2].copy(u"Mario Bounce (ON)       ");
-    mItems->mBuffer[3].copy(u"Cappy Collision (OFF)   ");
-    mItems->mBuffer[4].copy(u"Cappy Bounce (OFF)      ");
+    mItems->mBuffer[0].copy(u"Mario Collision (ON)    ");
+    mItems->mBuffer[1].copy(u"Mario Bounce (ON)       ");
+    mItems->mBuffer[2].copy(u"Cappy Collision (OFF)   ");
+    mItems->mBuffer[3].copy(u"Cappy Bounce (OFF)      ");
 }
 
 const sead::WFixedSafeString<0x200>* HideAndSeekConfigMenu::getStringData() {
@@ -33,29 +33,29 @@ const sead::WFixedSafeString<0x200>* HideAndSeekConfigMenu::getStringData() {
         : u"Cappy Bounce (OFF)      "
     );
     
-    mItems->mBuffer[1].copy(marioCollision);
-    mItems->mBuffer[2].copy(marioBounce);
-    mItems->mBuffer[3].copy(cappyCollision);
-    mItems->mBuffer[4].copy(cappyBounce);
+    mItems->mBuffer[0].copy(marioCollision);
+    mItems->mBuffer[1].copy(marioBounce);
+    mItems->mBuffer[2].copy(cappyCollision);
+    mItems->mBuffer[3].copy(cappyBounce);
 
     return mItems->mBuffer;
 }
 
 GameModeConfigMenu::UpdateAction HideAndSeekConfigMenu::updateMenu(int selectIndex) {
     switch (selectIndex) {
-        case 1: {
+        case 0: {
             HideAndSeekInfo::mHasMarioCollision = !HideAndSeekInfo::mHasMarioCollision;
             return UpdateAction::REFRESH;
         }
-        case 2: {
+        case 1: {
             HideAndSeekInfo::mHasMarioBounce = !HideAndSeekInfo::mHasMarioBounce;
             return UpdateAction::REFRESH;
         }
-        case 3: {
+        case 2: {
             HideAndSeekInfo::mHasCappyCollision = !HideAndSeekInfo::mHasCappyCollision;
             return UpdateAction::REFRESH;
         }
-        case 4: {
+        case 3: {
             HideAndSeekInfo::mHasCappyBounce = !HideAndSeekInfo::mHasCappyBounce;
             return UpdateAction::REFRESH;
         }

@@ -85,7 +85,7 @@ class StageSceneStateServerConfig : public al::HostStateBase<al::Scene>, public 
         inline void deactivateInput();
 
         // Main Menu Options
-        static constexpr int mMainMenuOptionsCount = 5;
+        static constexpr int mMainMenuOptionsCount = 4;
         sead::SafeArray<sead::WFixedSafeString<0x200>, mMainMenuOptionsCount>* mMainMenuOptions = nullptr;
         const sead::WFixedSafeString<0x200>* getMainMenuOptions();
 

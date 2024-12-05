@@ -324,7 +324,7 @@ const sead::WFixedSafeString<0x200>* StageSceneStateServerConfig::getMainMenuOpt
     const char* gameModeName = GameModeFactory::getModeName(GameModeManager::instance()->getGameMode());
     int size = strlen(gameModeName) + 7 + 1;
     char gameModeConfig[size];
-    strcpy(gameModeConfig, gameModeName);
+    strcpy(gameModeConfig, "Player");
     strcat(gameModeConfig, " Config");
     mMainMenuOptions->mBuffer[ServerConfigOption::GAMEMODECONFIG].convertFromMultiByteString(gameModeConfig, size);
 
