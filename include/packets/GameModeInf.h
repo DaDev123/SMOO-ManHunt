@@ -22,10 +22,6 @@ struct PACKED GameModeInf : Packet {
                 return GameMode::LEGACY;
             }
 
-            // ROUNDCANCEL or FALLOFF (Freeze-Tag)
-            if (type == 4 || type == 8) {
-                return GameMode::FREEZETAG;
-            }
 
             // (ROUNDSTART or STATE) or (PLAYER or TIME)
             if (type == 1 || type == 2) {
@@ -52,7 +48,6 @@ struct PACKED GameModeInf : Packet {
                  * commands could cause issues because of this.
                  */
                 if (this->mUserID != Client::getClientId()) {
-                    return GameMode::FREEZETAG;
                 }
             }
         }
