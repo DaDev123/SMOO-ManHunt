@@ -28,6 +28,7 @@ B59E28 B seadPrintHook  // sead::system::print
 41B4E4 BL setPlayerModel
 
 1B3F0C NOP                             // disables call to open HTML viewer during first time odyssey flight
+1F2998 B freezeIsCheckpointWarpAllowed // Patches checkpoint system to always allow warping, disable in freeze tag
 216FAC MOV W0, #0                      // disables AppearSwitchTimer's camera switch
 
 // Puppet Actor Setup
@@ -126,6 +127,11 @@ B59E28 B seadPrintHook  // sead::system::print
 // 891394 BL drawInitHook
 // 91328 BL updateInitHook
 
+// Freeze tag hooks
+4272F0 BL freezeDeathArea            // Replaces functionality of death areas in freeze tag
+538A94 B  freezePlayerHitPointDamage // Reimplements the damage function, disabling it's functionality in Freeze Tag
+51B280 B  freezeKidsMode             // Forces kids mode to be enabled during Freeze Tag
+1CFBA0 BL freezeMoonHitboxDisable    // When mode enabled, disable hitboxes with moons to avoid softlocks
 
 1c9f64 BL healTwice
 1d03d4 BL 0x00000071005286f0
