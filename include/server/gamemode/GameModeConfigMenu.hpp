@@ -1,20 +1,17 @@
 #pragma once
 
-#include "sead/prim/seadSafeString.h"
+#include "game/Layouts/CommonVerticalList.h"
 
 class GameModeConfigMenu {
 public:
-    enum UpdateAction {
-        NOOP,
-        CLOSE,
-        REFRESH,
-    };
-
     GameModeConfigMenu() = default;
 
-    virtual UpdateAction updateMenu(int selectIndex) { return UpdateAction::NOOP; }
+    virtual void initMenu(const al::LayoutInitInfo &initInfo) {return;}
 
-    virtual const sead::WFixedSafeString<0x200>* getStringData() { return nullptr; }
+    virtual bool updateMenu(int selectIndex) {return false;}
 
-    virtual const int getMenuSize() { return 0; }
+    virtual const sead::WFixedSafeString<0x200>* getStringData() {return nullptr;}
+
+    virtual const int getMenuSize() {return 0;}
+
 };

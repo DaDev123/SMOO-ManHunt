@@ -37,14 +37,14 @@ namespace rs {
     ChangeStageInfo *createChangeStageInfo(const al::LiveActor *, const al::PlacementInfo *);
 
     bool isPlayerDamageStopDemo(const al::LiveActor *);
-    
+
     bool isKidsMode(const al::Scene*);
     bool isKidsMode(const GameDataHolder*);
 
     PlayerActorBase * getPlayerActor(const al::Scene *);
 
     void get2DAreaPos(sead::Vector3<f32> *, al::AreaObj const *);
-    
+
     bool isInvalidChangeStage(al::LiveActor const*);
 
     bool isInChangeStageArea(PlayerActorHakoniwa const*, sead::Vector3f const *);
@@ -90,6 +90,6 @@ namespace rs {
     int getStageShineAnimFrame(al::LiveActor const*, char const*);
     const char* getStageShineArchiveName(al::LiveActor const*, char const*);
     const char* getStageShineEmptyArchiveName(al::LiveActor const*, char const*);
-    
+
     bool isActionEndDemoPlayer(al::LiveActor const*);
 }
