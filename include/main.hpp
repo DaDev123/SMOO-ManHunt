@@ -1,3 +1,4 @@
+
 #include "al/LiveActor/LiveActor.h"
 #include "al/camera/CameraTicket.h"
 #include "al/util.hpp"
@@ -50,6 +51,8 @@
 #include "debugMenu.hpp"
 #include "Keyboard.hpp"
 #include "server/DeltaTime.hpp"
+
+#include "server/hns/HideAndSeekMode.hpp"
 
 static bool isInGame = false;
 

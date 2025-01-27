@@ -466,6 +466,10 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
     if(isFirstStep && GameModeManager::instance()->isMode(GameMode::FREEZETAG))
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
+if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return true;
+    return false;
+
     if(!barrierOn || !barrierOff)
         return isFirstStep;
 
@@ -481,10 +485,12 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         al::hideModelIfShow(barrierOn);
         PuppetCapActor::sIsPlayerInSafeZone = false;
     }
+}
 
     return isFirstStep;
 
 }
+
 
 void seadPrintHook(const char *fmt, ...)
 {
@@ -496,13 +502,19 @@ void seadPrintHook(const char *fmt, ...)
     va_end(args);
 }
 
+
 class Shine;
 
 namespace rs {
     bool requestStartDemoShineGet(Shine*);
 }
 
-bool moonCutsceneReplace(void* shine){
+bool moonCutsceneReplace(void* shine){ {
+    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+    return false;
+}
+
     if(!globalScene || !globalScene->mIsAlive)
         return false;
     globalScene->mSceneLayout->startShineCountAnim(false);
@@ -520,7 +532,12 @@ bool moonCutsceneReplace(void* shine){
     return true;
 }
 
-bool storyMoonCutsceneReplace(void* shine){
+
+bool storyMoonCutsceneReplace(void* shine){ {
+    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+    return false;
+}
     if(!globalScene || !globalScene->mIsAlive)
         return false;
     globalScene->kill();
@@ -533,7 +550,11 @@ namespace al {
     void startNerveAction(LiveActor*, const char*);
 }
 
-bool fixMapPartsInitHook(al::LiveActor* thisPtr){
+bool fixMapPartsInitHook(al::LiveActor* thisPtr){ {
+    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+    return false;
+}
     const char* modelName = al::getModelName(thisPtr);
     //if(!modelName)
         //return al::trySyncStageSwitchAppearAndKill(thisPtr); //Orig
@@ -552,6 +573,11 @@ void barrierAppearHook(al::LiveActor* thisPtr, const char* actionName){
         al::startNerveAction(thisPtr, actionName);
 }
 
-bool checkAssistMode(GameDataHolderAccessor accessor){
+bool checkAssistMode(GameDataHolderAccessor accessor){ {
+    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+    return false;
+}
     return !rs::isKidsMode(accessor.mData);
 }
+

@@ -12,6 +12,7 @@
 
 #include "packets/Packet.h"
 
+
 struct HideAndSeekInfo : GameModeInfoBase {
     HideAndSeekInfo() { mMode = GameMode::HIDEANDSEEK; }
     bool mIsPlayerIt = false;

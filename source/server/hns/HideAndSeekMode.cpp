@@ -1,3 +1,4 @@
+#pragma once
 #include "server/hns/HideAndSeekMode.hpp"
 #include <cmath>
 #include "al/async/FunctorV0M.hpp"
@@ -27,6 +28,9 @@
 
 #include "basis/seadNew.h"
 #include "server/hns/HideAndSeekConfigMenu.hpp"
+
+#include "game/HakoniwaSequence/HakoniwaSequence.h"
+#include "game/StageScene/StageScene.h"
 
 HideAndSeekMode::HideAndSeekMode(const char* name) : GameModeBase(name) {}
 
@@ -119,11 +123,10 @@ void HideAndSeekMode::begin() {
 
     GameModeBase::begin();
 
-if (mInfo->mIsPlayerIt) {
+
     PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
     hit->mCurrentHit = hit->getMaxCurrent();
     hit->mIsKidsMode = true;
-}
 }
 
 
@@ -280,6 +283,7 @@ void HideAndSeekMode::update() {
 
 
 // Hooks
+
 
 namespace al {
     class Triangle;
