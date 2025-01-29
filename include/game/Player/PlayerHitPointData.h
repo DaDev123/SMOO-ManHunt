@@ -12,6 +12,7 @@ public:
     void setKidsModeFlag(bool);
     void init(void);
     void recoverMax(void);
+    int recoverMax(void) const;
     int getCurrent(void) const;
     int endGetCurrentMaxWithoutItem(void) const;
     int getMaxCurrent(void) const;
