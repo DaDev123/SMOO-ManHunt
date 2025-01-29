@@ -466,24 +466,29 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
     if(isFirstStep && GameModeManager::instance()->isMode(GameMode::FREEZETAG))
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
-if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
-        return true;
 
-    if(!barrierOn || !barrierOff)
+	// Check if HIDEANDSEEK mode is active
+if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+    if (!barrierOn || !barrierOff)
         return isFirstStep;
 
     al::LiveActor* firstPuppet = Client::getPuppet(0);
     al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
 
-    if(al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f){
+    if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
         al::hideModelIfShow(barrierOff);
         al::showModelIfHide(barrierOn);
         PuppetCapActor::sIsPlayerInSafeZone = true;
-    }else {
+    } else {
         al::showModelIfHide(barrierOff);
         al::hideModelIfShow(barrierOn);
         PuppetCapActor::sIsPlayerInSafeZone = false;
     }
+} else {
+    // Optional: Handle what happens when HIDEANDSEEK is not active
+    // This block is executed if HIDEANDSEEK is disabled
+    al::hideModelIfHide(barrierOff);
+    al::hideModelIfShow(barrierOn);
 }
 
     return isFirstStep;
