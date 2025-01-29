@@ -511,7 +511,6 @@ namespace rs {
 bool moonCutsceneReplace(void* shine){ {
     if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
         return true;
-    return false;
 }
 
     if(!globalScene || !globalScene->mIsAlive)
@@ -552,7 +551,6 @@ namespace al {
 bool fixMapPartsInitHook(al::LiveActor* thisPtr){ {
     if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
         return true;
-    return false;
 }
     const char* modelName = al::getModelName(thisPtr);
     //if(!modelName)
