@@ -174,8 +174,6 @@ void HideAndSeekMode::update() {
         }
         hasTriggered = true; // Set the flag to true to ensure this block doesn't execute again.
     }
-}
-}
 
 
     PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
