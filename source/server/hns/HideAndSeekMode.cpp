@@ -112,9 +112,6 @@ Packet *HideAndSeekMode::createPacket() {
     return packet;
 }
 
-bool hasTriggeredPlayerIt = false;  // Tracks if the code for `mIsPlayerIt == true` has run.
-bool hasTriggeredNotPlayerIt = false;  // Tracks if the code for `mIsPlayerIt == false` has run.
-
 
 void HideAndSeekMode::begin() {
 
@@ -128,22 +125,17 @@ void HideAndSeekMode::begin() {
     GameModeBase::begin();
 
 if (mInfo->mIsPlayerIt) {
-        if (!hasTriggeredPlayerIt) {  // Check if the block for `mIsPlayerIt == true` has been triggered.
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = true;
             pause();
-            hasTriggeredPlayerIt = true;  // Set flag to true so this block doesn't execute again.
         }
     } else {
-        if (!hasTriggeredNotPlayerIt) {  // Check if the block for `mIsPlayerIt == false` has been triggered.
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+          PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = false;
             pause();
-            hasTriggeredNotPlayerIt = true;  // Set flag to true so this block doesn't execute again.
         }
-}
 
 }
 
