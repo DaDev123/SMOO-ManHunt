@@ -154,33 +154,27 @@ void HideAndSeekMode::unpause() {
     }
 }
 
-bool hasTriggered = false; 
-
 void HideAndSeekMode::update() {
-
-// Add this at an appropriate place, like a global scope or class member.
- // Replace 'someFunction' with the actual function name where this code runs.
-    if (!hasTriggered) { // Check if the operation has already been executed.
-        if (mInfo->mIsPlayerIt) {
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = true;
-            pause();
-        } else {
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = false;
-            pause();
-        }
-        hasTriggered = true; // Set the flag to true to ensure this block doesn't execute again.
-    }
-
 
     PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
 
     bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
 
     if (mIsFirstFrame) {
+
+        if (mInfo->mIsPlayerIt) {
+        
+    
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = true;
+    } else {
+        
+    
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = false;
+        }
 
         if (mInfo->mIsUseGravityCam && mTicket) {
             al::startCamera(mCurScene, mTicket, -1);
