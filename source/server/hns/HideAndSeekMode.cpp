@@ -59,9 +59,6 @@ void HideAndSeekMode::init(const GameModeInitInfo& info) {
     mModeLayout = new HideAndSeekIcon("HideAndSeekIcon", *info.mLayoutInitInfo);
 
     mModeLayout->showSeeking();
-    PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxCurrent();
-            hit->mIsKidsMode = false;
 
     mModeTimer->disableTimer();
 
@@ -170,6 +167,16 @@ void HideAndSeekMode::update() {
         }
 
         mIsFirstFrame = false;
+    }
+
+    if (mInfo->mIsPlayerIt) {
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = true;
+    } else {
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = false;
     }
 
     if (rs::isActiveDemoPlayerPuppetable(playerBase)) {
