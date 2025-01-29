@@ -497,6 +497,8 @@ if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
 
 return isFirstStep;
 
+}
+
 
 
 void seadPrintHook(const char *fmt, ...)
