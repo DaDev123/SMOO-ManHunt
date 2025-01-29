@@ -298,8 +298,11 @@ namespace al {
 
 bool ManHuntKidsMode(GameDataFile* thisPtr)
 {
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+ else if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+     if(!mInfo->mIsPlayerIt) {
         return true;
+     }
+    return false;
     
     return thisPtr->mIsKidsMode;
 }
