@@ -487,7 +487,7 @@ if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
 } else {
     // Optional: Handle what happens when HIDEANDSEEK is not active
     // This block is executed if HIDEANDSEEK is disabled
-    al::hideModelIfHide(barrierOff);
+    al::hideModelIfShow(barrierOff);
     al::hideModelIfShow(barrierOn);
 }
 
