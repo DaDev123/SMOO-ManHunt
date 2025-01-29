@@ -179,17 +179,6 @@ void HideAndSeekMode::update() {
             hit->mIsKidsMode = false;
     }
 
-bool ManHuntKidsMode(GameDataFile* thisPtr)
-{
- if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-     if(!mInfo->mIsPlayerIt) {
-        return true;
-     }
-    return false;
-    
-    return thisPtr->mIsKidsMode;
-}
-
 
     if (rs::isActiveDemoPlayerPuppetable(playerBase)) {
         mInvulnTime = 0.0f; // if player is in a demo, reset invuln time
@@ -306,4 +295,14 @@ bool ManHuntKidsMode(GameDataFile* thisPtr)
 namespace al {
     class Triangle;
     bool isFloorCode(al::Triangle const&,char const*);
+}
+
+
+bool ManHuntKidsMode(GameDataFile* thisPtr)
+{
+ if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+    
+        return true;
+    
+    return thisPtr->mIsKidsMode;
 }
