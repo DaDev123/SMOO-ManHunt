@@ -13,6 +13,7 @@ public:
     void init(void);
     void recoverMax(void);
     int getCurrent(void) const;
+    int endGetCurrentMaxWithoutItem(void) const;
     int getMaxCurrent(void) const;
     int getMaxWithItem(void) const;
     int getMaxWithoutItem(void) const;
