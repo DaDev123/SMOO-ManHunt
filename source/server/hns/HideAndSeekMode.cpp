@@ -12,6 +12,7 @@
 #include "game/Player/PlayerActorHakoniwa.h"
 #include "heap/seadHeapMgr.h"
 #include "game/Player/PlayerHitPointData.h"
+#include "game/Player/HackCap.h"
 #include "layouts/HideAndSeekIcon.h"
 #include "logger.hpp"
 #include "math/seadVector.h"
@@ -128,6 +129,7 @@ if (mInfo->mIsPlayerIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = true;
+            
             pause();
         }
     } else {
