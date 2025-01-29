@@ -467,39 +467,46 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
 
-// Ensure barriers are properly initialized and their visibility is reset
-if (barrierOn) {
-    al::hideModelIfShow(barrierOn);
-}
-if (barrierOff) {
-    al::hideModelIfShow(barrierOff);
-}
+// Add a flag to indicate if a refresh is needed
+static bool shouldRefreshBarriers = true;
 
 // Check if HIDEANDSEEK mode is active
 if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
     if (!barrierOn || !barrierOff)
         return isFirstStep;
 
+    // Delayed refresh logic
+    if (shouldRefreshBarriers) {
+        shouldRefreshBarriers = false; // Prevent multiple refreshes
+        al::hideModelIfShow(barrierOff);
+        al::hideModelIfShow(barrierOn);
+        return isFirstStep; // Skip this frame to allow a refresh
+    }
+
+    // Main HIDEANDSEEK logic
     al::LiveActor* firstPuppet = Client::getPuppet(0);
     al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
 
     if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
-        al::hideModelIfShow(barrierOff);  // Hide the "off" barrier
-        al::showModelIfHide(barrierOn);  // Show the "on" barrier
+        al::hideModelIfShow(barrierOff);
+        al::showModelIfHide(barrierOn);
         PuppetCapActor::sIsPlayerInSafeZone = true;
     } else {
-        al::showModelIfHide(barrierOff);  // Show the "off" barrier
-        al::hideModelIfShow(barrierOn);  // Hide the "on" barrier
+        al::showModelIfHide(barrierOff);
+        al::hideModelIfShow(barrierOn);
         PuppetCapActor::sIsPlayerInSafeZone = false;
     }
 } else {
-    // Handle what happens when HIDEANDSEEK is not active
+    // Non-HIDEANDSEEK logic
     if (barrierOn) {
-        al::hideModelIfShow(barrierOn);  // Ensure the "on" barrier is hidden
+        al::hideModelIfShow(barrierOn);
     }
     if (barrierOff) {
-        al::hideModelIfShow(barrierOff);  // Ensure the "off" barrier is hidden
+        al::hideModelIfShow(barrierOff);
     }
+
+    // Reset the refresh flag for the next stage reload
+    shouldRefreshBarriers = true;
 }
 
 return isFirstStep;
