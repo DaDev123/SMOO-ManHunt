@@ -203,3 +203,6 @@ B59E28 B seadPrintHook // sead::system::print
 
 //LifeUpMaxItem demo skip
 4DB934 NOP
+
+// ManHunt Patches
+51b280 B ManHuntKidsMode
