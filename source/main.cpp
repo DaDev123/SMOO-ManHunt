@@ -560,7 +560,7 @@ namespace al {
 }
 
 bool fixMapPartsInitHook(al::LiveActor* thisPtr) {
-    if (!GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
         return false; // Disable functionality if not in HIDEANDSEEK mode
     }
 
