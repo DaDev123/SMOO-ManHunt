@@ -143,7 +143,7 @@ if (mInfo->mIsPlayerIt) {
             pause();
             hasTriggeredNotPlayerIt = true;  // Set flag to true so this block doesn't execute again.
         }
-
+}
 
 }
 
