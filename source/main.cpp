@@ -467,6 +467,14 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
 
+// Ensure barriers are properly initialized and their visibility is reset
+if (barrierOn) {
+    al::hideModelIfShow(barrierOn);
+}
+if (barrierOff) {
+    al::hideModelIfShow(barrierOff);
+}
+
 // Check if HIDEANDSEEK mode is active
 if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
     if (!barrierOn || !barrierOff)
@@ -476,22 +484,21 @@ if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
     al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
 
     if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
-        al::hideModelIfShow(barrierOff);
-        al::showModelIfHide(barrierOn);
+        al::hideModelIfShow(barrierOff);  // Hide the "off" barrier
+        al::showModelIfHide(barrierOn);  // Show the "on" barrier
         PuppetCapActor::sIsPlayerInSafeZone = true;
     } else {
-        al::showModelIfHide(barrierOff);
-        al::hideModelIfShow(barrierOn);
+        al::showModelIfHide(barrierOff);  // Show the "off" barrier
+        al::hideModelIfShow(barrierOn);  // Hide the "on" barrier
         PuppetCapActor::sIsPlayerInSafeZone = false;
     }
 } else {
     // Handle what happens when HIDEANDSEEK is not active
-    // Ensure only one barrier is visible, and both cannot be visible
     if (barrierOn) {
-        al::hideModelIfShow(barrierOn);
+        al::hideModelIfShow(barrierOn);  // Ensure the "on" barrier is hidden
     }
     if (barrierOff) {
-        al::hideModelIfShow(barrierOff);
+        al::hideModelIfShow(barrierOff);  // Ensure the "off" barrier is hidden
     }
 }
 
