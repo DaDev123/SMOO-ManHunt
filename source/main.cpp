@@ -513,10 +513,7 @@ namespace rs {
     bool requestStartDemoShineGet(Shine*);
 }
 
-bool moonCutsceneReplace(void* shine){ {
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-}
+bool moonCutsceneReplace(void* shine){
 
     if(!globalScene || !globalScene->mIsAlive)
         return false;
@@ -536,11 +533,7 @@ bool moonCutsceneReplace(void* shine){ {
 }
 
 
-bool storyMoonCutsceneReplace(void* shine){ {
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-    return false;
-}
+bool storyMoonCutsceneReplace(void* shine){
     if(!globalScene || !globalScene->mIsAlive)
         return false;
     globalScene->kill();
@@ -553,10 +546,7 @@ namespace al {
     void startNerveAction(LiveActor*, const char*);
 }
 
-bool fixMapPartsInitHook(al::LiveActor* thisPtr){ {
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-}
+bool fixMapPartsInitHook(al::LiveActor* thisPtr){
     const char* modelName = al::getModelName(thisPtr);
     //if(!modelName)
         //return al::trySyncStageSwitchAppearAndKill(thisPtr); //Orig
@@ -575,11 +565,7 @@ void barrierAppearHook(al::LiveActor* thisPtr, const char* actionName){
         al::startNerveAction(thisPtr, actionName);
 }
 
-bool checkAssistMode(GameDataHolderAccessor accessor){ {
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-    return false;
-}
+bool checkAssistMode(GameDataHolderAccessor accessor){
     return !rs::isKidsMode(accessor.mData);
 }
 
