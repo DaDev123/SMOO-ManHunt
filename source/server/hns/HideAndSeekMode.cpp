@@ -127,7 +127,7 @@ void HideAndSeekMode::begin() {
 
 if (mInfo->mIsPlayerIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mCurrentHit = hit->kill();
             hit->mIsKidsMode = true;
             
             pause();
