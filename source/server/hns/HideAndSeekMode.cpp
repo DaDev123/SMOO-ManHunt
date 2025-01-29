@@ -131,7 +131,6 @@ if (mInfo->mIsPlayerIt) {
             hit->mIsKidsMode = true;
             
             pause();
-        }
     } else {
           PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
