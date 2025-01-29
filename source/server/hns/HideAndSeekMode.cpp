@@ -127,13 +127,13 @@ void HideAndSeekMode::begin() {
 
 if (mInfo->mIsPlayerIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->recoverMax();
+            hit->mCurrentHit = hit->getMaxCurrentWithoutItem();
             hit->mIsKidsMode = true;
             
             pause();
     } else {
           PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->recoverMax();
+            hit->mCurrentHit = hit->GetMaxCurrentWithoutItem();
             hit->mIsKidsMode = false;
             pause();
         }
