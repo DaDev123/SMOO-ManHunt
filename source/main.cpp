@@ -474,9 +474,8 @@ if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
         return isFirstStep;
 
     al::LiveActor* firstPuppet = Client::getPuppet(0);
-    al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
+    al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : 
 
-if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
     if(al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f){
         al::hideModelIfShow(barrierOff);
         al::showModelIfHide(barrierOn);
@@ -485,10 +484,6 @@ if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
         al::showModelIfHide(barrierOff);
         al::hideModelIfShow(barrierOn);
         PuppetCapActor::sIsPlayerInSafeZone = false;
-    else {
-	    al::hideModelIfHide(barrierOff);
-	    al::hideModelIfHide(barrierOn);
-    }
     }
 }
 
