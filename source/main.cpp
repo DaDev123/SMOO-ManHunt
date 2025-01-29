@@ -467,23 +467,29 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
 
-// Add a flag to indicate if a refresh is needed
-static bool shouldRefreshBarriers = true;
+static bool isFirstFrameAfterReload = true;
 
 // Check if HIDEANDSEEK mode is active
 if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
+    // If it's the first frame after reload, hide both barriers
+    if (isFirstFrameAfterReload) {
+        isFirstFrameAfterReload = false; // Mark the first frame as done
+
+        // Hide both barriers initially to avoid overlap
+        if (barrierOn) {
+            al::hideModelIfShow(barrierOn);
+        }
+        if (barrierOff) {
+            al::hideModelIfShow(barrierOff);
+        }
+
+        return isFirstStep; // Skip this frame to allow the game to process the barrier update
+    }
+
+    // Now proceed with the normal HIDEANDSEEK logic
     if (!barrierOn || !barrierOff)
         return isFirstStep;
 
-    // Delayed refresh logic
-    if (shouldRefreshBarriers) {
-        shouldRefreshBarriers = false; // Prevent multiple refreshes
-        al::hideModelIfShow(barrierOff);
-        al::hideModelIfShow(barrierOn);
-        return isFirstStep; // Skip this frame to allow a refresh
-    }
-
-    // Main HIDEANDSEEK logic
     al::LiveActor* firstPuppet = Client::getPuppet(0);
     al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
 
@@ -497,16 +503,13 @@ if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
         PuppetCapActor::sIsPlayerInSafeZone = false;
     }
 } else {
-    // Non-HIDEANDSEEK logic
+    // Handle behavior when HIDEANDSEEK is not active (force both barriers to be hidden)
     if (barrierOn) {
         al::hideModelIfShow(barrierOn);
     }
     if (barrierOff) {
         al::hideModelIfShow(barrierOff);
     }
-
-    // Reset the refresh flag for the next stage reload
-    shouldRefreshBarriers = true;
 }
 
 return isFirstStep;
