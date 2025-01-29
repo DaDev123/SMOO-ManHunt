@@ -154,7 +154,28 @@ void HideAndSeekMode::unpause() {
     }
 }
 
+bool hasTriggered = false; 
+
 void HideAndSeekMode::update() {
+
+// Add this at an appropriate place, like a global scope or class member.
+ // Replace 'someFunction' with the actual function name where this code runs.
+    if (!hasTriggered) { // Check if the operation has already been executed.
+        if (mInfo->mIsPlayerIt) {
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = true;
+            pause();
+        } else {
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = false;
+            pause();
+        }
+        hasTriggered = true; // Set the flag to true to ensure this block doesn't execute again.
+    }
+}
+
 
     PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
 
@@ -168,23 +189,6 @@ void HideAndSeekMode::update() {
 
         mIsFirstFrame = false;
     }
-
-    if (mInfo->mIsPlayerIt) {
-        
-    
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = true;
-        pause();
-    } else {
-        
-    
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = false;
-        pause();
-    }
-
 
     if (rs::isActiveDemoPlayerPuppetable(playerBase)) {
         mInvulnTime = 0.0f; // if player is in a demo, reset invuln time
