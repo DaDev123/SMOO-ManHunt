@@ -468,7 +468,7 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
 
 
 	// Check if HIDEANDSEEK mode is active
-if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
     if (!barrierOn || !barrierOff)
         return isFirstStep;
 
@@ -560,7 +560,7 @@ namespace al {
 }
 
 bool fixMapPartsInitHook(al::LiveActor* thisPtr) {
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+    if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
         return false; // Disable functionality if not in HIDEANDSEEK mode
     }
 
