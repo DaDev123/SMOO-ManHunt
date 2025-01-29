@@ -175,14 +175,14 @@ void HideAndSeekMode::update() {
         PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = true;
-            sleep(999)
+            sleep(999);
     } else {
         mIsFirstFrame = true;
     
         PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = false;
-            sleep(999)
+            sleep(999);
     }
 
 
