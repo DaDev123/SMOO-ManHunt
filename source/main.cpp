@@ -513,18 +513,27 @@ namespace rs {
     bool requestStartDemoShineGet(Shine*);
 }
 
-bool moonCutsceneReplace(void* shine){
+bool moonCutsceneReplace(void* shine) {
+    if (!GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return false; // Disable functionality if not in HIDEANDSEEK mode
+    }
 
-    if(!globalScene || !globalScene->mIsAlive)
+    if (!globalScene || !globalScene->mIsAlive)
         return false;
+
     globalScene->mSceneLayout->startShineCountAnim(false);
     globalScene->mSceneLayout->updateCounterParts();
+
     PlayerActorHakoniwa* player = (PlayerActorHakoniwa*) rs::getPlayerActor(globalScene);
-    if(!player)
+    if (!player)
         return false;
+
     const char* curPlayerAnim = player->mPlayerAnimator->curAnim.cstr();
-    if((al::isEqualSubString(curPlayerAnim, "Motorcycle") || al::isEqualSubString(curPlayerAnim, "SphinxRide")) || (player->mHackKeeper && player->mHackKeeper->currentHackActor))
+    if ((al::isEqualSubString(curPlayerAnim, "Motorcycle") || al::isEqualSubString(curPlayerAnim, "SphinxRide")) || 
+        (player->mHackKeeper && player->mHackKeeper->currentHackActor)) {
         return true;
+    }
+
     player->startDemoPuppetable();
     auto* transPtr = al::getTransPtr(player);
     transPtr->y += 30;
@@ -532,10 +541,14 @@ bool moonCutsceneReplace(void* shine){
     return true;
 }
 
+bool storyMoonCutsceneReplace(void* shine) {
+    if (!GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return false; // Disable functionality if not in HIDEANDSEEK mode
+    }
 
-bool storyMoonCutsceneReplace(void* shine){
-    if(!globalScene || !globalScene->mIsAlive)
+    if (!globalScene || !globalScene->mIsAlive)
         return false;
+
     globalScene->kill();
     return true;
 }
@@ -546,26 +559,40 @@ namespace al {
     void startNerveAction(LiveActor*, const char*);
 }
 
-bool fixMapPartsInitHook(al::LiveActor* thisPtr){
+bool fixMapPartsInitHook(al::LiveActor* thisPtr) {
+    if (!GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return false; // Disable functionality if not in HIDEANDSEEK mode
+    }
+
     const char* modelName = al::getModelName(thisPtr);
-    //if(!modelName)
-        //return al::trySyncStageSwitchAppearAndKill(thisPtr); //Orig
-    if(al::isEqualString(modelName, "LaLumiere"))
-       barrierOn = thisPtr;
-    if(al::isEqualString(modelName, "LaLumiereOFF"))
+
+    if (al::isEqualString(modelName, "LaLumiere"))
+        barrierOn = thisPtr;
+
+    if (al::isEqualString(modelName, "LaLumiereOFF"))
         barrierOff = thisPtr;
-    return al::trySyncStageSwitchAppearAndKill(thisPtr); //Orig
+
+    return al::trySyncStageSwitchAppearAndKill(thisPtr); // Original logic
 }
 
-void barrierAppearHook(al::LiveActor* thisPtr, const char* actionName){
-    if(al::isEqualString(GameDataFunction::getCurrentStageName(thisPtr), "SkyWorldHomeStage") && al::calcDistanceH(thisPtr, sead::Vector3f{5722.f, 29000.f, -41583.f}) < 200)
-        //thisPtr->kill();
-    al::startNerveAction(thisPtr, "Disappear");
-    else
+void barrierAppearHook(al::LiveActor* thisPtr, const char* actionName) {
+    if (!GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return; // Disable functionality if not in HIDEANDSEEK mode
+    }
+
+    if (al::isEqualString(GameDataFunction::getCurrentStageName(thisPtr), "SkyWorldHomeStage") && 
+        al::calcDistanceH(thisPtr, sead::Vector3f{5722.f, 29000.f, -41583.f}) < 200) {
+        // thisPtr->kill();
+        al::startNerveAction(thisPtr, "Disappear");
+    } else {
         al::startNerveAction(thisPtr, actionName);
+    }
 }
 
-bool checkAssistMode(GameDataHolderAccessor accessor){
+bool checkAssistMode(GameDataHolderAccessor accessor) {
+    if (!GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return false; // Disable functionality if not in HIDEANDSEEK mode
+    }
+
     return !rs::isKidsMode(accessor.mData);
 }
-
