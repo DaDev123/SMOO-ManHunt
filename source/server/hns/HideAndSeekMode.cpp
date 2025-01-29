@@ -59,6 +59,9 @@ void HideAndSeekMode::init(const GameModeInitInfo& info) {
     mModeLayout = new HideAndSeekIcon("HideAndSeekIcon", *info.mLayoutInitInfo);
 
     mModeLayout->showSeeking();
+    PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxCurrent();
+            hit->mIsKidsMode = false;
 
     mModeTimer->disableTimer();
 
@@ -267,14 +270,8 @@ void HideAndSeekMode::update() {
         if(!mInfo->mIsPlayerIt) {
             mInvulnTime = 0;
             mModeLayout->showHiding();
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxCurrent();
-            hit->mIsKidsMode = false;
         } else {
             mModeLayout->showSeeking();
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxCurrent();
-            hit->mIsKidsMode = true;
         }
 
         Client::sendGamemodePacket();
