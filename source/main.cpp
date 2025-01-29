@@ -467,7 +467,7 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
 
-	// Check if HIDEANDSEEK mode is active
+// Check if HIDEANDSEEK mode is active
 if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
     if (!barrierOn || !barrierOff)
         return isFirstStep;
@@ -485,15 +485,18 @@ if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
         PuppetCapActor::sIsPlayerInSafeZone = false;
     }
 } else {
-    // Optional: Handle what happens when HIDEANDSEEK is not active
-    // This block is executed if HIDEANDSEEK is disabled
-    al::hideModelIfShow(barrierOff);
-    al::hideModelIfShow(barrierOn);
+    // Handle what happens when HIDEANDSEEK is not active
+    // Ensure only one barrier is visible, and both cannot be visible
+    if (barrierOn) {
+        al::hideModelIfShow(barrierOn);
+    }
+    if (barrierOff) {
+        al::hideModelIfShow(barrierOff);
+    }
 }
 
-    return isFirstStep;
+return isFirstStep;
 
-}
 
 
 void seadPrintHook(const char *fmt, ...)
