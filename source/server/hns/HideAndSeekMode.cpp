@@ -112,6 +112,10 @@ Packet *HideAndSeekMode::createPacket() {
     return packet;
 }
 
+bool hasTriggeredPlayerIt = false;  // Tracks if the code for `mIsPlayerIt == true` has run.
+bool hasTriggeredNotPlayerIt = false;  // Tracks if the code for `mIsPlayerIt == false` has run.
+
+
 void HideAndSeekMode::begin() {
 
     unpause();
@@ -122,6 +126,24 @@ void HideAndSeekMode::begin() {
 
 
     GameModeBase::begin();
+
+if (mInfo->mIsPlayerIt) {
+        if (!hasTriggeredPlayerIt) {  // Check if the block for `mIsPlayerIt == true` has been triggered.
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = true;
+            pause();
+            hasTriggeredPlayerIt = true;  // Set flag to true so this block doesn't execute again.
+        }
+    } else {
+        if (!hasTriggeredNotPlayerIt) {  // Check if the block for `mIsPlayerIt == false` has been triggered.
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = false;
+            pause();
+            hasTriggeredNotPlayerIt = true;  // Set flag to true so this block doesn't execute again.
+        }
+
 
 }
 
@@ -161,20 +183,6 @@ void HideAndSeekMode::update() {
     bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
 
     if (mIsFirstFrame) {
-
-        if (mInfo->mIsPlayerIt) {
-        
-    
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = true;
-    } else {
-        
-    
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = false;
-        }
 
         if (mInfo->mIsUseGravityCam && mTicket) {
             al::startCamera(mCurScene, mTicket, -1);
