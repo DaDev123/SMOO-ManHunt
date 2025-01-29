@@ -468,7 +468,6 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
 
 if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
         return true;
-    return false;
 
     if(!barrierOn || !barrierOff)
         return isFirstStep;
