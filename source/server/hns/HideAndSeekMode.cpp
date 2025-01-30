@@ -303,9 +303,6 @@ namespace al {
 
 bool ManHuntKidsMode(GameDataFile* thisPtr)
 {
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-
     // Check if mIsPlayerIt is true using mInfo
     if (thisPtr->mInfo && thisPtr->mInfo->mIsPlayerIt)
         return true;
