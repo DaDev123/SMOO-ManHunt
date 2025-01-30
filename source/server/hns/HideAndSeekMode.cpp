@@ -184,9 +184,10 @@ void HideAndSeekMode::unpause() {
         if (!hasRefilledHealthNotIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             
+            hit->mIsKidsMode = false;
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
-            hit->mIsKidsMode = false;
+            
 
             hasRefilledHealthNotIt = true; // Prevent further refills when NOT "It"
         }
