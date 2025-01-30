@@ -467,53 +467,82 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
 
+// A simple struct to manage the state of each barrier
+struct BarrierState {
+    bool isVisibleOn = false;  // Should "barrierOn" be visible?
+    bool isVisibleOff = false; // Should "barrierOff" be visible?
+
+    void reset() {
+        isVisibleOn = false;
+        isVisibleOff = false;
+    }
+
+    void update(bool isInSafeZone) {
+        if (isInSafeZone) {
+            isVisibleOn = true;
+            isVisibleOff = false;
+        } else {
+            isVisibleOn = false;
+            isVisibleOff = true;
+        }
+    }
+
+    void applyVisibility() {
+        if (barrierOn) {
+            if (isVisibleOn) al::showModelIfHide(barrierOn);
+            else al::hideModelIfShow(barrierOn);
+        }
+
+        if (barrierOff) {
+            if (isVisibleOff) al::showModelIfHide(barrierOff);
+            else al::hideModelIfShow(barrierOff);
+        }
+    }
+};
+
+// Barrier state manager
+static BarrierState barrierState;
+
+// A flag to detect if this is the first frame after reload
 static bool isFirstFrameAfterReload = true;
 
-// Check if HIDEANDSEEK mode is active
-if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
-    // If it's the first frame after reload, hide both barriers
+void handleBarriers() {
+    // Check if it's the first frame after the stage reload
     if (isFirstFrameAfterReload) {
-        isFirstFrameAfterReload = false; // Mark the first frame as done
+        isFirstFrameAfterReload = false;
 
-        // Hide both barriers initially to avoid overlap
-        if (barrierOn) {
-            al::hideModelIfShow(barrierOn);
-        }
-        if (barrierOff) {
-            al::hideModelIfShow(barrierOff);
-        }
+        // Reset barrier states at the start of the reload
+        barrierState.reset();
+        barrierState.applyVisibility();  // Apply initial visibility state
 
-        return isFirstStep; // Skip this frame to allow the game to process the barrier update
+        return; // Skip further logic on this frame
     }
 
-    // Now proceed with the normal HIDEANDSEEK logic
-    if (!barrierOn || !barrierOff)
-        return isFirstStep;
+    // Check if HIDEANDSEEK mode is active
+    if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
+        if (!barrierOn || !barrierOff)
+            return;
 
-    al::LiveActor* firstPuppet = Client::getPuppet(0);
-    al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
+        al::LiveActor* firstPuppet = Client::getPuppet(0);
+        al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
 
-    if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
-        al::hideModelIfShow(barrierOff);
-        al::showModelIfHide(barrierOn);
-        PuppetCapActor::sIsPlayerInSafeZone = true;
+        // Check distance and update the barrier state based on whether the player is in the safe zone
+        if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
+            barrierState.update(true);  // Player is in safe zone
+        } else {
+            barrierState.update(false); // Player is not in safe zone
+        }
+
+        // Apply visibility changes based on the current state
+        barrierState.applyVisibility();
     } else {
-        al::showModelIfHide(barrierOff);
-        al::hideModelIfShow(barrierOn);
-        PuppetCapActor::sIsPlayerInSafeZone = false;
-    }
-} else {
-    // Handle behavior when HIDEANDSEEK is not active (force both barriers to be hidden)
-    if (barrierOn) {
-        al::hideModelIfShow(barrierOn);
-    }
-    if (barrierOff) {
-        al::hideModelIfShow(barrierOff);
+        // When HIDEANDSEEK is not active, ensure barriers are hidden
+        barrierState.update(false); // Player is not in safe zone
+        barrierState.applyVisibility();
     }
 }
 
 return isFirstStep;
-
 }
 
 
