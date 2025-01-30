@@ -155,18 +155,6 @@ void HideAndSeekMode::unpause() {
     }
 }
 
-void HideAndSeekMode::update() {
-    PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
-
-    bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
-
-    if (mIsFirstFrame) {
-        if (mInfo->mIsUseGravityCam && mTicket) {
-            al::startCamera(mCurScene, mTicket, -1);
-        }
-        mIsFirstFrame = false;
-    }
-
  void HideAndSeekMode::update() {
     PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
 
