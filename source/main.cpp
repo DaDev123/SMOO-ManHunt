@@ -470,7 +470,7 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
 static int frameDelay = 0; // Tracks delay after reload
 
 // Check if HIDEANDSEEK mode is active
-if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
+if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
     // Delay logic for 1 frame after reload
     if (frameDelay < 1) {
         frameDelay++;
@@ -572,7 +572,7 @@ namespace al {
 }
 
 bool fixMapPartsInitHook(al::LiveActor* thisPtr) {
-    if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
         return false; // Disable functionality if not in HIDEANDSEEK mode
     }
 
