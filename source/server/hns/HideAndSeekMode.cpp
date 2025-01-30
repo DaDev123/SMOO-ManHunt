@@ -121,13 +121,12 @@ void HideAndSeekMode::begin() {
     unpause();
 
     mIsFirstFrame = true;
-    
     mInvulnTime = 0.0f;
-
 
     GameModeBase::begin();
 
-    if (mInfo->mIsPlayerIt) {
+    // Check if the game is in HIDEANDSEEK mode and the player is "It"
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && mInfo->mIsPlayerIt) {
         PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
         hit->mCurrentHit = hit->getMaxWithoutItem();
 
@@ -138,14 +137,19 @@ void HideAndSeekMode::begin() {
     }
 }
 
-// Function definition outside the block
-bool ManHuntKidsMode(GameDataFile* thisPtr)
-{
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-    
-    return thisPtr->mIsKidsMode;
+// Function definition for ManHuntKidsMode
+bool ManHuntKidsMode(GameDataFile* thisPtr) {
+    // Check if the game is in HIDEANDSEEK mode and return the Kids Mode status
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        return thisPtr->mIsKidsMode;
+    }
+
+    // If not in HIDEANDSEEK mode, return false
+    return false;
 }
+
+
+
 
 
 void HideAndSeekMode::end() {
