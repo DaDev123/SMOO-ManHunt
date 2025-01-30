@@ -517,29 +517,41 @@ void handleBarriers() {
 
         return; // Skip further logic on this frame
     }
+static int frameDelay = 0; // Tracks delay after reload
 
-    // Check if HIDEANDSEEK mode is active
-    if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
-        if (!barrierOn || !barrierOff)
-            return;
-
-        al::LiveActor* firstPuppet = Client::getPuppet(0);
-        al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
-
-        // Check distance and update the barrier state based on whether the player is in the safe zone
-        if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
-            barrierState.update(true);  // Player is in safe zone
-        } else {
-            barrierState.update(false); // Player is not in safe zone
-        }
-
-        // Apply visibility changes based on the current state
-        barrierState.applyVisibility();
-    } else {
-        // When HIDEANDSEEK is not active, ensure barriers are hidden
-        barrierState.update(false); // Player is not in safe zone
-        barrierState.applyVisibility();
+// Check if HIDEANDSEEK mode is active
+if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
+    // Delay logic for 1 frame after reload
+    if (frameDelay < 1) {
+        frameDelay++;
+        if (barrierOn) al::hideModelIfShow(barrierOn); // Force reset
+        if (barrierOff) al::hideModelIfShow(barrierOff); // Force reset
+        return isFirstStep; // Skip processing until next frame
     }
+
+    // Normal barrier logic
+    if (!barrierOn || !barrierOff)
+        return isFirstStep;
+
+    al::LiveActor* firstPuppet = Client::getPuppet(0);
+    al::LiveActor* checkDistanceTo = firstPuppet && al::isAlive(firstPuppet) && !rs::isKidsMode(stageScene) ? firstPuppet : playerBase;
+
+    if (al::calcDistanceH(checkDistanceTo, barrierOn) < 1640.f) {
+        al::hideModelIfShow(barrierOff);
+        al::showModelIfHide(barrierOn);
+        PuppetCapActor::sIsPlayerInSafeZone = true;
+    } else {
+        al::showModelIfHide(barrierOff);
+        al::hideModelIfShow(barrierOn);
+        PuppetCapActor::sIsPlayerInSafeZone = false;
+    }
+} else {
+    // Reset frame delay when not in HIDEANDSEEK mode
+    frameDelay = 0;
+
+    // Ensure barriers are hidden
+    if (barrierOn) al::hideModelIfShow(barrierOn);
+    if (barrierOff) al::hideModelIfShow(barrierOff);
 }
 
 return isFirstStep;
