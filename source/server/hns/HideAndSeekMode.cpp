@@ -208,7 +208,6 @@ void HideAndSeekMode::update() {
     } else if (!mInfo->mIsPlayerIt && hasRefilledHealthIt) {
         hasRefilledHealthIt = false;
     }
-}
 
 
 
