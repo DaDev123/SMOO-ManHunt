@@ -113,51 +113,30 @@ Packet *HideAndSeekMode::createPacket() {
     return packet;
 }
 
-// Forward declaration for ManHuntKidsMode function
-bool ManHuntKidsMode(GameDataFile* thisPtr, HideAndSeekMode* modeInstance);
-
 void HideAndSeekMode::begin() {
-    // Unpause and initialize basic variables
+
     unpause();
+
     mIsFirstFrame = true;
+    
     mInvulnTime = 0.0f;
 
-    // Begin base class logic
+
     GameModeBase::begin();
 
-    // Null checks to avoid crashing
-    if (mInfo == nullptr || mCurScene == nullptr || mCurScene->mHolder.mData == nullptr || mCurScene->mHolder.mData->mGameDataFile == nullptr) {
-        // Return early if any pointer is null, preventing crashes
-        return;
-    }
-
-    // Check if the game is in Hide and Seek mode and if the player is "It"
-    if (ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile, this)) {
-        // If player is "It", modify hit point data
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-
-        // Ensure hit data is valid
-        if (hit == nullptr) {
-            return;  // Early exit if hit data is invalid
+if (mInfo->mIsPlayerIt) {
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = true;
+            
+            pause();
+    } else {
+          PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = false;
+            pause();
         }
 
-        // Reset current hit points and enable Kids Mode
-        hit->mCurrentHit = hit->getMaxWithoutItem();
-        mCurScene->mHolder.mData->mGameDataFile->mIsKidsMode = true;
-
-        // Pause the game (likely to give the "It" player a break)
-        pause();
-    }
-}
-
-// Helper function to check if the player is "It" and the game is in Hide and Seek mode
-bool ManHuntKidsMode(GameDataFile* thisPtr, HideAndSeekMode* modeInstance) {
-    // Check if we are in HIDEANDSEEK mode and if the player is "It"
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && modeInstance->isPlayerIt()) {
-        return true;  // Return true if both conditions are met
-    }
-
-    return false;  // Return false if either condition is not met
 }
 
 
