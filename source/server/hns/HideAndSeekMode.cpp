@@ -167,22 +167,8 @@ void HideAndSeekMode::unpause() {
         mIsFirstFrame = false;
     }
 
-// Assuming PlayerActorBase has a method to retrieve a PlayerActorHakoniwa object
-    PlayerActorHakoniwa* playerActorHakoniwa = playerBase->getPlayerActorHakoniwa();  // Replace with the correct method
-
-    // Obtain the HackCap instance from PlayerActorHakoniwa
-    HackCap* hackCap = nullptr;
-    if (playerActorHakoniwa) {
-        hackCap = playerActorHakoniwa->getHackCapInstance();  // Make sure this method exists or use another way to access HackCap
-    }
-     
     // Check if the player is "It"
     if (mInfo->mIsPlayerIt) {
-        
-        // Enable rescue player feature if the player is "It"
-        if (hackCap != nullptr) {
-            hackCap->startRescuePlayer();  // Call the rescue player function
-        }
  
         // Only refill health once if the player is "It"
         if (!hasRefilledHealthIt) {
