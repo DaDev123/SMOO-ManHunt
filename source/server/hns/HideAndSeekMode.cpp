@@ -194,7 +194,6 @@ void HideAndSeekMode::unpause() {
     } else if (!mInfo->mIsPlayerIt && hasRefilledHealthIt) {
         hasRefilledHealthIt = false;
     }
-}
 
 
 
