@@ -167,15 +167,21 @@ void HideAndSeekMode::update() {
         mIsFirstFrame = false;
     }
 
-    // Check if the stage has been reloaded
-    if (hasStageBeenReloaded) {
-        // Skip the health refill logic if the stage has been reloaded
-        return;
+ void HideAndSeekMode::update() {
+    PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
+
+    bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
+
+    if (mIsFirstFrame) {
+        if (mInfo->mIsUseGravityCam && mTicket) {
+            al::startCamera(mCurScene, mTicket, -1);
+        }
+        mIsFirstFrame = false;
     }
 
     // Check if the player is "It"
     if (mInfo->mIsPlayerIt) {
-        // Only refill health once if the player is "It" and stage hasn't been reloaded
+        // Only refill health once if the player is "It"
         if (!hasRefilledHealthIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
@@ -184,7 +190,7 @@ void HideAndSeekMode::update() {
             hasRefilledHealthIt = true; // Prevent further refills when "It"
         }
     } else {
-        // Only refill health once if the player is NOT "It" and stage hasn't been reloaded
+        // Only refill health once if the player is NOT "It"
         if (!hasRefilledHealthNotIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
@@ -193,7 +199,7 @@ void HideAndSeekMode::update() {
             hasRefilledHealthNotIt = true; // Prevent further refills when NOT "It"
         }
     }
-
+    
     // Reset the refill flags when the player changes state (It -> Not It or vice versa)
     if (mInfo->mIsPlayerIt && hasRefilledHealthNotIt) {
         hasRefilledHealthNotIt = false;
@@ -202,14 +208,6 @@ void HideAndSeekMode::update() {
     }
 }
 
-// Add a function or logic somewhere in your game to set the stage reload flag
-void HideAndSeekMode::onStageReloaded() {
-    hasStageBeenReloaded = true;
-
-    // Reset the health refill flags if needed (depends on how you want to handle reload)
-    hasRefilledHealthIt = false;
-    hasRefilledHealthNotIt = false;
-}
 
 
     if (rs::isActiveDemoPlayerPuppetable(playerBase)) {
