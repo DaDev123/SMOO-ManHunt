@@ -467,56 +467,6 @@ bool hakoniwaSequenceHook(HakoniwaSequence* sequence) {
         GameModeManager::instance()->getMode<FreezeTagMode>()->setWipeHolder(sequence->mWipeHolder);
 
 
-// A simple struct to manage the state of each barrier
-struct BarrierState {
-    bool isVisibleOn = false;  // Should "barrierOn" be visible?
-    bool isVisibleOff = false; // Should "barrierOff" be visible?
-
-    void reset() {
-        isVisibleOn = false;
-        isVisibleOff = false;
-    }
-
-    void update(bool isInSafeZone) {
-        if (isInSafeZone) {
-            isVisibleOn = true;
-            isVisibleOff = false;
-        } else {
-            isVisibleOn = false;
-            isVisibleOff = true;
-        }
-    }
-
-    void applyVisibility() {
-        if (barrierOn) {
-            if (isVisibleOn) al::showModelIfHide(barrierOn);
-            else al::hideModelIfShow(barrierOn);
-        }
-
-        if (barrierOff) {
-            if (isVisibleOff) al::showModelIfHide(barrierOff);
-            else al::hideModelIfShow(barrierOff);
-        }
-    }
-};
-
-// Barrier state manager
-static BarrierState barrierState;
-
-// A flag to detect if this is the first frame after reload
-static bool isFirstFrameAfterReload = true;
-
-void handleBarriers() {
-    // Check if it's the first frame after the stage reload
-    if (isFirstFrameAfterReload) {
-        isFirstFrameAfterReload = false;
-
-        // Reset barrier states at the start of the reload
-        barrierState.reset();
-        barrierState.applyVisibility();  // Apply initial visibility state
-
-        return; // Skip further logic on this frame
-    }
 static int frameDelay = 0; // Tracks delay after reload
 
 // Check if HIDEANDSEEK mode is active
@@ -556,7 +506,6 @@ if (GameModeManager::instance()->isMode(GameMode::HIDEANDSEEK)) {
 
 return isFirstStep;
 }
-
 
 
 void seadPrintHook(const char *fmt, ...)
