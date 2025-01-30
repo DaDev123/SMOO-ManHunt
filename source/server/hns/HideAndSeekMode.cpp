@@ -156,13 +156,15 @@ void HideAndSeekMode::unpause() {
 }
 
 // Function to check Kids Mode status based on current game mode
+// Function to check Kids Mode status based on current game mode
 bool ManHuntKidsMode(GameDataFile* thisPtr, bool isPlayerIt)
 {
-    // Only enable KidsMode if we are in HIDEANDSEEK mode and the player is "It"
+    // Enable Kids Mode if we are in HIDEANDSEEK and the player is "It"
     if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && isPlayerIt)
         return true;
 
-    return thisPtr->mIsKidsMode; // Default to the value in the GameDataFile if not in HIDEANDSEEK mode
+    // Otherwise, return the existing KidsMode state from the GameDataFile
+    return thisPtr->mIsKidsMode;
 }
 
 void HideAndSeekMode::update() {
@@ -185,8 +187,8 @@ void HideAndSeekMode::update() {
         if (!hasRefilledHealthIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             
-            // Trigger Kids Mode based on the ManHuntKidsMode function (Only when "It" and HIDEANDSEEK mode is active)
-            hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile, isPlayerIt); 
+            // Trigger Kids Mode when player is "It" and HIDEANDSEEK mode is active
+            hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile, isPlayerIt);
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
 
@@ -197,7 +199,7 @@ void HideAndSeekMode::update() {
         if (!hasRefilledHealthNotIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             
-            hit->mIsKidsMode = false; // Not in Kids Mode if the player is not "It"
+            hit->mIsKidsMode = false; // No Kids Mode when the player is not "It"
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
 
@@ -211,6 +213,7 @@ void HideAndSeekMode::update() {
     } else if (!isPlayerIt && hasRefilledHealthIt) {
         hasRefilledHealthIt = false;
     }
+
 
 
 
