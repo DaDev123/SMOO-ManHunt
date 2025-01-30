@@ -167,8 +167,17 @@ void HideAndSeekMode::unpause() {
         mIsFirstFrame = false;
     }
 
+     // Obtain the HackCap instance tied to the player (assuming mPlayerActor is the player object that has HackCap)
+    HackCap* hackCap = playerBase->getHackCapInstance();  // Example, assuming this method exists or modify accordingly
+
     // Check if the player is "It"
     if (mInfo->mIsPlayerIt) {
+        
+        // Enable rescue player feature if the player is "It"
+        if (hackCap != nullptr) {
+            hackCap->startRescuePlayer();  // Call the rescue player function
+        }
+ 
         // Only refill health once if the player is "It"
         if (!hasRefilledHealthIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
