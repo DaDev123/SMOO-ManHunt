@@ -124,19 +124,6 @@ void HideAndSeekMode::begin() {
 
     GameModeBase::begin();
 
-if (mInfo->mIsPlayerIt) {
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = true;
-            
-            pause();
-    } else {
-          PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = false;
-            pause();
-        }
-
 }
 
 
@@ -175,6 +162,20 @@ void HideAndSeekMode::update() {
     bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
 
     if (mIsFirstFrame) {
+        
+        if (mInfo->mIsPlayerIt) {
+        
+    
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = true;
+    } else {
+        
+    
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mIsKidsMode = false;
+        }
 
         if (mInfo->mIsUseGravityCam && mTicket) {
             al::startCamera(mCurScene, mTicket, -1);
