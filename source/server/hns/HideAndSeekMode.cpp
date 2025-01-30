@@ -126,12 +126,12 @@ void HideAndSeekMode::begin() {
     GameModeBase::begin();
 
 if (mInfo->mIsPlayerIt) {
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = true;
-            
-            pause();
-    } else {
+    PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+    hit->mCurrentHit = hit->getMaxWithoutItem();
+
+    // Use the ManHuntKidsMode function to determine the value for mIsKidsMode
+    hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile);
+} else {
           PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = false;
