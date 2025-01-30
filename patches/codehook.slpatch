@@ -205,5 +205,4 @@ B59E28 B seadPrintHook // sead::system::print
 4DB934 NOP
 
 //ManHunt Patches
-
-// 51b280 B ManHuntKidsMode
+ 51b280 B ManHuntKidsMode
