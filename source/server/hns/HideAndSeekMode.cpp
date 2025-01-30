@@ -167,9 +167,15 @@ void HideAndSeekMode::unpause() {
         mIsFirstFrame = false;
     }
 
-     // Obtain the HackCap instance tied to the player (assuming mPlayerActor is the player object that has HackCap)
-    HackCap* hackCap = playerBase->getHackCapInstance();  // Example, assuming this method exists or modify accordingly
+// Assuming PlayerActorBase has a method to retrieve a PlayerActorHakoniwa object
+    PlayerActorHakoniwa* playerActorHakoniwa = playerBase->getPlayerActorHakoniwa();  // Replace with the correct method
 
+    // Obtain the HackCap instance from PlayerActorHakoniwa
+    HackCap* hackCap = nullptr;
+    if (playerActorHakoniwa) {
+        hackCap = playerActorHakoniwa->getHackCapInstance();  // Make sure this method exists or use another way to access HackCap
+    }
+     
     // Check if the player is "It"
     if (mInfo->mIsPlayerIt) {
         
