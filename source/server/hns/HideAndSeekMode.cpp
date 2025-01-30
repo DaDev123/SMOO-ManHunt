@@ -156,29 +156,61 @@ void HideAndSeekMode::unpause() {
 }
 
 void HideAndSeekMode::update() {
-
     PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
 
     bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
 
     if (mIsFirstFrame) {
-
         if (mInfo->mIsUseGravityCam && mTicket) {
             al::startCamera(mCurScene, mTicket, -1);
         }
-
         mIsFirstFrame = false;
     }
 
+    // Check if the stage has been reloaded
+    if (hasStageBeenReloaded) {
+        // Skip the health refill logic if the stage has been reloaded
+        return;
+    }
+
+    // Check if the player is "It"
     if (mInfo->mIsPlayerIt) {
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+        // Only refill health once if the player is "It" and stage hasn't been reloaded
+        if (!hasRefilledHealthIt) {
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = true;
+
+            hasRefilledHealthIt = true; // Prevent further refills when "It"
+        }
     } else {
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+        // Only refill health once if the player is NOT "It" and stage hasn't been reloaded
+        if (!hasRefilledHealthNotIt) {
+            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             hit->mCurrentHit = hit->getMaxWithoutItem();
             hit->mIsKidsMode = false;
+
+            hasRefilledHealthNotIt = true; // Prevent further refills when NOT "It"
+        }
     }
+
+    // Reset the refill flags when the player changes state (It -> Not It or vice versa)
+    if (mInfo->mIsPlayerIt && hasRefilledHealthNotIt) {
+        hasRefilledHealthNotIt = false;
+    } else if (!mInfo->mIsPlayerIt && hasRefilledHealthIt) {
+        hasRefilledHealthIt = false;
+    }
+}
+
+// Add a function or logic somewhere in your game to set the stage reload flag
+void HideAndSeekMode::onStageReloaded() {
+    hasStageBeenReloaded = true;
+
+    // Reset the health refill flags if needed (depends on how you want to handle reload)
+    hasRefilledHealthIt = false;
+    hasRefilledHealthNotIt = false;
+}
+
 
     if (rs::isActiveDemoPlayerPuppetable(playerBase)) {
         mInvulnTime = 0.0f; // if player is in a demo, reset invuln time
