@@ -572,19 +572,25 @@ namespace al {
 }
 
 bool fixMapPartsInitHook(al::LiveActor* thisPtr) {
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
-        return true; // Disable functionality if not in HIDEANDSEEK mode
-    }
-
     const char* modelName = al::getModelName(thisPtr);
 
-    if (al::isEqualString(modelName, "LaLumiere"))
+    // Always assign the barrier actors to ensure proper initialization
+    if (al::isEqualString(modelName, "LaLumiere")) {
         barrierOn = thisPtr;
+    }
 
-    if (al::isEqualString(modelName, "LaLumiereOFF"))
+    if (al::isEqualString(modelName, "LaLumiereOFF")) {
         barrierOff = thisPtr;
+    }
 
-    return al::trySyncStageSwitchAppearAndKill(thisPtr); // Original logic
+    // If HIDEANDSEEK mode is active, override default functionality
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
+        // Skip default behavior but ensure actors are initialized
+        return true;
+    }
+
+    // Call the original functionality for normal cases
+    return al::trySyncStageSwitchAppearAndKill(thisPtr);
 }
 
 void barrierAppearHook(al::LiveActor* thisPtr, const char* actionName) {
