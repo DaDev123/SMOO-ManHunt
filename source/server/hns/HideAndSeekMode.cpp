@@ -113,12 +113,6 @@ Packet *HideAndSeekMode::createPacket() {
     return packet;
 }
 
-class GameLogic {
-public:
-    bool ManHuntKidsMode(GameDataFile* thisPtr);
-};
-
-
 void HideAndSeekMode::begin() {
 
     unpause();
@@ -129,26 +123,21 @@ void HideAndSeekMode::begin() {
 
 
     GameModeBase::begin();
-
-// Forward declaration
-bool ManHuntKidsMode(GameDataFile* thisPtr);
-
 if (mInfo->mIsPlayerIt) {
     PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
     hit->mCurrentHit = hit->getMaxWithoutItem();
-    // Call ManHuntKidsMode to determine mIsKidsMode
-    hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile);
+
+    // Activate ManHuntKidsMode logic
+    mCurScene->mHolder.mData->mGameDataFile->mIsKidsMode = true;
+
+    pause();
 }
 
+// Function remains as it is
 bool ManHuntKidsMode(GameDataFile* thisPtr) {
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
-        return true;
-
-    if (thisPtr->mInfo && thisPtr->mInfo->mIsPlayerIt) // Add this condition
-        return true;
-
     return thisPtr->mIsKidsMode;
 }
+
 
 }
 
