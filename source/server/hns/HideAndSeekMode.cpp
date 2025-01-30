@@ -156,12 +156,12 @@ void HideAndSeekMode::unpause() {
 }
 
 // Function to check Kids Mode status based on current game mode
-bool ManHuntKidsMode(GameDataFile* thisPtr)
+bool ManHuntKidsMode(GameDataFile* thisPtr, bool isPlayerIt)
 {
     // Only enable KidsMode if we are in HIDEANDSEEK mode and the player is "It"
-    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && thisPtr->mIsPlayerIt)
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && isPlayerIt)
         return true;
-    
+
     return thisPtr->mIsKidsMode; // Default to the value in the GameDataFile if not in HIDEANDSEEK mode
 }
 
@@ -178,13 +178,15 @@ void HideAndSeekMode::update() {
     }
 
     // Check if the player is "It"
-    if (mInfo->mIsPlayerIt) {
+    bool isPlayerIt = mInfo->mIsPlayerIt;
+
+    if (isPlayerIt) {
         // Only refill health once if the player is "It"
         if (!hasRefilledHealthIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             
             // Trigger Kids Mode based on the ManHuntKidsMode function (Only when "It" and HIDEANDSEEK mode is active)
-            hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile); 
+            hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile, isPlayerIt); 
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
 
@@ -204,11 +206,12 @@ void HideAndSeekMode::update() {
     }
     
     // Reset the refill flags when the player changes state (It -> Not It or vice versa)
-    if (mInfo->mIsPlayerIt && hasRefilledHealthNotIt) {
+    if (isPlayerIt && hasRefilledHealthNotIt) {
         hasRefilledHealthNotIt = false;
-    } else if (!mInfo->mIsPlayerIt && hasRefilledHealthIt) {
+    } else if (!isPlayerIt && hasRefilledHealthIt) {
         hasRefilledHealthIt = false;
     }
+
 
 
     if (rs::isActiveDemoPlayerPuppetable(playerBase)) {
