@@ -176,6 +176,8 @@ void HideAndSeekMode::unpause() {
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
             hit->mIsKidsMode = true;
+            float maxHealth = hit->getMaxWithoutItem();  // Get max health value
+         
 
             hasRefilledHealthIt = true; // Prevent further refills when "It"
         }
