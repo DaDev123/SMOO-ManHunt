@@ -139,7 +139,11 @@ void HideAndSeekMode::begin() {
 }
 
 // Function definition outside the block
-bool ManHuntKidsMode(GameDataFile* thisPtr) {
+bool ManHuntKidsMode(GameDataFile* thisPtr)
+{
+    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+    
     return thisPtr->mIsKidsMode;
 }
 
