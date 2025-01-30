@@ -125,19 +125,28 @@ void HideAndSeekMode::begin() {
 
     GameModeBase::begin();
 
+// Forward declaration
+bool ManHuntKidsMode(GameDataFile* thisPtr);
+
 if (mInfo->mIsPlayerIt) {
     PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
     hit->mCurrentHit = hit->getMaxWithoutItem();
 
-    // Use the ManHuntKidsMode function to determine the value for mIsKidsMode
+    // Call the function
     hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile);
-} else {
-          PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
-            hit->mIsKidsMode = false;
-            pause();
-        }
 
+    pause();
+}
+
+// Function definition
+bool ManHuntKidsMode(GameDataFile* thisPtr) {
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+
+    return thisPtr->mIsKidsMode;
+}
+
+    
 }
 
 
@@ -300,13 +309,3 @@ namespace al {
     class Triangle;
     bool isFloorCode(al::Triangle const&,char const*);
 }
-
-bool ManHuntKidsMode(GameDataFile* thisPtr)
-{
-    // Check if mIsPlayerIt is true using mInfo
-    if (thisPtr->mInfo && thisPtr->mInfo->mIsPlayerIt)
-        return true;
-
-    return thisPtr->mIsKidsMode;
-}
-
