@@ -172,7 +172,7 @@ void HideAndSeekMode::unpause() {
         // Only refill health once if the player is "It"
         if (!hasRefilledHealthIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mCurrentHit = hit->getMaxCurrent();
             hit->mIsKidsMode = true;
 
             hasRefilledHealthIt = true; // Prevent further refills when "It"
@@ -181,7 +181,7 @@ void HideAndSeekMode::unpause() {
         // Only refill health once if the player is NOT "It"
         if (!hasRefilledHealthNotIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
+            hit->mCurrentHit = hit->getMaxCurrent();
             hit->mIsKidsMode = false;
 
             hasRefilledHealthNotIt = true; // Prevent further refills when NOT "It"
