@@ -65,9 +65,6 @@ class HideAndSeekMode : public GameModeBase {
 
         void setCameraTicket(al::CameraTicket* ticket) { mTicket = ticket; }
 
-        HideAndSeekInfo* getInfo() const {
-        return mInfo;
-        }
 
     private:
         float mInvulnTime = 0.0f;
