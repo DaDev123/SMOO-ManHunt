@@ -149,9 +149,6 @@ bool GameLogic::ManHuntKidsMode(GameDataFile* thisPtr) {
     return thisPtr->mIsKidsMode;
 }
 
-    
-}
-
 
 void HideAndSeekMode::end() {
 
