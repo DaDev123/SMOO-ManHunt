@@ -114,7 +114,7 @@ Packet *HideAndSeekMode::createPacket() {
 }
 
 // Forward declaration of the function
-bool ManHuntKidsMode(GameDataFile* thisPtr, const HideAndSeekMode* modeInstance);
+bool ManHuntKidsMode(GameDataFile* thisPtr, HideAndSeekMode* modeInstance);
 
 void HideAndSeekMode::begin() {
 
@@ -124,6 +124,11 @@ void HideAndSeekMode::begin() {
     mInvulnTime = 0.0f;
 
     GameModeBase::begin();
+
+    // Ensure mInfo is not null before accessing it
+    if (mInfo == nullptr) {
+        return; // Early return to prevent crash if mInfo is nullptr
+    }
 
     // Check if the player is "It" and the game is in HIDEANDSEEK mode
     if (ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile, this)) {
@@ -138,7 +143,7 @@ void HideAndSeekMode::begin() {
 }
 
 // Function definition outside the block
-bool ManHuntKidsMode(GameDataFile* thisPtr, const HideAndSeekMode* modeInstance) {
+bool ManHuntKidsMode(GameDataFile* thisPtr, HideAndSeekMode* modeInstance) {
     // Check if the game is in HIDEANDSEEK mode and the player is "It"
     if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && modeInstance->isPlayerIt()) {
         return true;
