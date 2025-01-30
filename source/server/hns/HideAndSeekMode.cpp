@@ -113,9 +113,10 @@ Packet *HideAndSeekMode::createPacket() {
     return packet;
 }
 // Function definition for ManHuntKidsMode
-bool ManHuntKidsMode(GameDataFile* thisPtr) {
+// Function definition for ManHuntKidsMode
+bool ManHuntKidsMode(GameDataFile* thisPtr, HideAndSeekMode* modeInstance) {
     // Check if the game is in HIDEANDSEEK mode and the player is "It"
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && thisPtr->mSceneInfo->mIsPlayerIt) {
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && modeInstance->mInfo->mIsPlayerIt) {
         return true;
     }
 
@@ -133,13 +134,14 @@ void HideAndSeekMode::begin() {
     GameModeBase::begin();
 
     // Check if the game is in HIDEANDSEEK mode and the player is "It"
-    if (ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile)) {
+    if (ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile, this)) {
         PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
         hit->mCurrentHit = hit->getMaxWithoutItem();
 
         pause();
     }
 }
+
 
 
 
