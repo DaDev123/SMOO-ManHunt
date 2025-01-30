@@ -130,24 +130,26 @@ void HideAndSeekMode::begin() {
 
     GameModeBase::begin();
 
-    if (mInfo->mIsPlayerIt) {
-        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-        hit->mCurrentHit = hit->getMaxWithoutItem();
+// Forward declaration
+bool ManHuntKidsMode(GameDataFile* thisPtr);
 
-        GameLogic logic;
-        hit->mIsKidsMode = logic.ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile);
-
-        pause();
-    }
+if (mInfo->mIsPlayerIt) {
+    PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+    hit->mCurrentHit = hit->getMaxWithoutItem();
+    // Call ManHuntKidsMode to determine mIsKidsMode
+    hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile);
 }
 
-// Define the function outside the class
-bool GameLogic::ManHuntKidsMode(GameDataFile* thisPtr) {
+bool ManHuntKidsMode(GameDataFile* thisPtr) {
     if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+
+    if (thisPtr->mInfo && thisPtr->mInfo->mIsPlayerIt) // Add this condition
         return true;
 
     return thisPtr->mIsKidsMode;
 }
+
 
 
 void HideAndSeekMode::end() {
