@@ -150,7 +150,7 @@ bool ManHuntKidsMode(GameDataFile* thisPtr) {
     return thisPtr->mIsKidsMode;
 }
 
-
+}
 
 void HideAndSeekMode::end() {
 
