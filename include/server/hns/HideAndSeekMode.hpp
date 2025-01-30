@@ -71,6 +71,11 @@ class HideAndSeekMode : public GameModeBase {
 
 
     private:
+     
+        bool hasStageBeenReloaded = false; // Flag to check if stage has been reloaded
+        bool hasRefilledHealthIt = false;  // Flag for health refill when player is "It"
+        bool hasRefilledHealthNotIt = false; // Flag for health refill when player is NOT "It"
+    
         float mInvulnTime = 0.0f;
         GameModeTimer* mModeTimer = nullptr;
         HideAndSeekIcon *mModeLayout = nullptr;
