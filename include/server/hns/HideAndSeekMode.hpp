@@ -19,6 +19,10 @@ struct HideAndSeekInfo : GameModeInfoBase {
     bool mIsUseGravity = false;
     bool mIsUseGravityCam = false;
     bool mIsUseSlipperyGround = true;
+    bool hasStageBeenReloaded = false; // Flag to check if stage has been reloaded
+    bool hasRefilledHealthIt = false;  // Flag for health refill when player is "It"
+    bool hasRefilledHealthNotIt = false; // Flag for health refill when player is NOT "It"
+    
     GameTime mHidingTime;
 };
 
