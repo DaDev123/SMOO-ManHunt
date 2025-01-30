@@ -112,9 +112,16 @@ Packet *HideAndSeekMode::createPacket() {
 
     return packet;
 }
+// Function definition for ManHuntKidsMode
+bool ManHuntKidsMode(GameDataFile* thisPtr) {
+    // Check if the game is in HIDEANDSEEK mode and the player is "It"
+    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK) && thisPtr->mSceneInfo->mIsPlayerIt) {
+        return true;
+    }
 
-// Forward declaration of the function
-bool ManHuntKidsMode(GameDataFile* thisPtr);
+    // If not in HIDEANDSEEK mode or the player is not "It," return false
+    return false;
+}
 
 void HideAndSeekMode::begin() {
 
@@ -125,40 +132,14 @@ void HideAndSeekMode::begin() {
 
     GameModeBase::begin();
 
-    // Check if the game is in HIDEANDSEEK mode
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
-        // Check if the player is "It"
-        if (mInfo->mIsPlayerIt) {
-            PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-            hit->mCurrentHit = hit->getMaxWithoutItem();
+    // Check if the game is in HIDEANDSEEK mode and the player is "It"
+    if (ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile)) {
+        PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
+        hit->mCurrentHit = hit->getMaxWithoutItem();
 
-            // Enable Kids Mode
-            mCurScene->mHolder.mData->mGameDataFile->mIsKidsMode = true;
-
-            pause();
-        } else {
-            // If not "It," disable Kids Mode
-            mCurScene->mHolder.mData->mGameDataFile->mIsKidsMode = false;
-        }
-    } else {
-        // If not in HIDEANDSEEK mode, disable Kids Mode
-        mCurScene->mHolder.mData->mGameDataFile->mIsKidsMode = false;
+        pause();
     }
 }
-
-// Function definition for ManHuntKidsMode
-bool ManHuntKidsMode(GameDataFile* thisPtr) {
-    // Check if the game is in HIDEANDSEEK mode
-    if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
-        return thisPtr->mIsKidsMode;
-    }
-
-    // If not in HIDEANDSEEK mode, return false
-    return false;
-}
-
-
-
 
 
 
