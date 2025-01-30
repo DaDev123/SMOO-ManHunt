@@ -155,7 +155,16 @@ void HideAndSeekMode::unpause() {
     }
 }
 
- void HideAndSeekMode::update() {
+ // Function to check Kids Mode status based on current game mode
+bool ManHuntKidsMode(GameDataFile* thisPtr)
+{
+    if(GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK))
+        return true;
+    
+    return thisPtr->mIsKidsMode;
+}
+
+void HideAndSeekMode::update() {
     PlayerActorBase* playerBase = rs::getPlayerActor(mCurScene);
 
     bool isYukimaru = !playerBase->getPlayerInfo(); // if PlayerInfo is a nullptr, that means we're dealing with the bound bowl racer
@@ -169,12 +178,12 @@ void HideAndSeekMode::unpause() {
 
     // Check if the player is "It"
     if (mInfo->mIsPlayerIt) {
- 
         // Only refill health once if the player is "It"
         if (!hasRefilledHealthIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
-        
-            hit->mIsKidsMode = true;
+            
+            // Trigger Kids Mode based on the ManHuntKidsMode function
+            hit->mIsKidsMode = ManHuntKidsMode(mCurScene->mHolder.mData->mGameDataFile); 
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
 
@@ -185,10 +194,9 @@ void HideAndSeekMode::unpause() {
         if (!hasRefilledHealthNotIt) {
             PlayerHitPointData* hit = mCurScene->mHolder.mData->mGameDataFile->getPlayerHitPointData();
             
-            hit->mIsKidsMode = false;
+            hit->mIsKidsMode = false; // Not in Kids Mode if the player is not "It"
             float maxHealth = hit->getMaxWithoutItem();  // Get max health value
             hit->mCurrentHit = maxHealth;
-            
 
             hasRefilledHealthNotIt = true; // Prevent further refills when NOT "It"
         }
@@ -200,6 +208,8 @@ void HideAndSeekMode::unpause() {
     } else if (!mInfo->mIsPlayerIt && hasRefilledHealthIt) {
         hasRefilledHealthIt = false;
     }
+}
+
 
 
 
