@@ -573,7 +573,7 @@ namespace al {
 
 bool fixMapPartsInitHook(al::LiveActor* thisPtr) {
     if (GameModeManager::instance()->isModeAndActive(GameMode::HIDEANDSEEK)) {
-        return false; // Disable functionality if not in HIDEANDSEEK mode
+        return true; // Disable functionality if not in HIDEANDSEEK mode
     }
 
     const char* modelName = al::getModelName(thisPtr);
